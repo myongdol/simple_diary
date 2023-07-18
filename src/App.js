@@ -31,7 +31,7 @@ function App() {
   return (
     <div className="App">
       <DiaryEditor/>
-      <DiaryList diaryList={undefined}/>
+      <DiaryList diaryList={dummyList}/>
     </div>
   );
 }
