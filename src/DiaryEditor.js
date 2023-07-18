@@ -24,7 +24,7 @@ const DiaryEditor = () => {
             authorInput.current.focus();
             return;
         }
-        if(state.content.legth < 5) {
+        if(state.content.length < 5) {
             // alert("최소 5글자 이상 입력해야 합니다.")
             contentInput.current.focus();
             return;
