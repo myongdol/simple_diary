@@ -18,4 +18,11 @@ const DiaryList = ({diaryList}) => {
     );
 };
 
+//defaultProps는 undefined으로 전달될거 같은 props를 기본값으로 설정
+DiaryList.defaultProps={
+    diaryList: [],
+
+}
+
+
 export default DiaryList;
