@@ -1,7 +1,7 @@
 import DiaryItem from "./DiaryItem";
 
 // 현재 onDelete 프롭스 드릴링 발생한 상황
-const DiaryList = ({diaryList, onDelete}) => {
+const DiaryList = ({diaryList, onRemove}) => {
    
     
     return (
@@ -10,7 +10,7 @@ const DiaryList = ({diaryList, onDelete}) => {
             <h4>{diaryList.length}개의 일기가 있습니다.</h4>
             <div>
                 {diaryList.map((it) => (
-                   <DiaryItem key={it.id} {...it} onDelete={onDelete}/>
+                   <DiaryItem key={it.id} {...it} onRemove={onRemove}/>
                 ))}
             </div>
         </div>
