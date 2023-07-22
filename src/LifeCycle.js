@@ -11,6 +11,11 @@ const LifeCycle = () => {
         console.log("mount");
     },[])
 
+    useEffect(() => {
+        console.log("update");
+    })
+
+
     return <div style={{padding : 20}}>
         <div>
             {count}
