@@ -13,7 +13,17 @@ function App() {
 
   const getDate = async() => {
     const res = await fetch('https://jsonplaceholder.typicode.com/comments').then((res) => res.json());
-    console.log(res);
+    
+    const initData = res.slice(0, 20).map((item) => {
+      return {
+        author: item.email,
+        content: item.body,
+        emotion: Math.floor(Math.random() * 5)+1,
+        created_date : new Date().getTime(),
+        id: dataId.current++
+      }
+    })
+    setDate(initData)
   }
   useEffect(() => {
     getDate();
