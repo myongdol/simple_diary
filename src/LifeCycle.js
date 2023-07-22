@@ -7,6 +7,9 @@ const LifeCycle = () => {
     const [count, setCount] = useState(0);
     const [text, setText] = useState("");
 
+    useEffect(() => {
+        console.log("mount");
+    },[])
 
     return <div style={{padding : 20}}>
         <div>
