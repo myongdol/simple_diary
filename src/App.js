@@ -1,8 +1,8 @@
-import { useRef, useState } from 'react';
+import { useEffect, useRef, useState } from 'react';
 import './App.css';
 import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
-import LifeCycle from './LifeCycle';
+
 
 // const dummyList = [
 //   {
@@ -28,11 +28,21 @@ import LifeCycle from './LifeCycle';
 //   },
 // ]
 
+//https://jsonplaceholder.typicode.com/comments
 
 function App() {
   const [data, setDate] = useState([]);
 
   const dataId = useRef(0);
+
+  const getDate = async() => {
+    const res = await fetch('https://jsonplaceholder.typicode.com/comments').then((res) => res.json());
+    console.log(res);
+  }
+  useEffect(() => {
+    getDate();
+  },[])
+
   // 추가 기능
   const onCreate = (author, content, emotion) => {
     const created_date = new Date().getTime();
@@ -62,7 +72,6 @@ function App() {
 
   return (
     <div className="App">
-      <LifeCycle />
       <DiaryEditor onCreate={onCreate}/>
       <DiaryList onRemove={onRemove} diaryList={data} onEdit={onEdit}/>
     </div>
