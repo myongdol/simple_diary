@@ -17,6 +17,10 @@ const LifeCycle = () => {
 
     useEffect(() => {
         console.log(`count is update : ${count}`);
+        if(count > 5) {
+            alert("count가 5를 초과했으므로 초기화됩니다.");
+            setCount(1);
+        }
     }, [count])
 
     useEffect(() => {
