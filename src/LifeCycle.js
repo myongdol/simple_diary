@@ -15,6 +15,13 @@ const LifeCycle = () => {
         console.log("update");
     })
 
+    useEffect(() => {
+        console.log(`count is update : ${count}`);
+    }, [count])
+
+    useEffect(() => {
+        console.log(`text is update : ${text}`);
+    }, [text])
 
     return <div style={{padding : 20}}>
         <div>
