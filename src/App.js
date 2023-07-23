@@ -69,8 +69,8 @@ function App() {
 
   return (
     <div className="App">
-      <DiaryEditor onCreate={onCreate}/>
       <OptimizeTest />
+      <DiaryEditor onCreate={onCreate}/>
       <div>전체일기 : {data.length}</div>
       <div>기분 좋은 일기 수 : {goodCount}</div>
       <div>기분 나쁜 일기 수 : {badCount}</div>
