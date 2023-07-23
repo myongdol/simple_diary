@@ -1,8 +1,7 @@
-import { useEffect, useMemo, useRef, useState } from 'react';
+import { useCallback, useEffect, useMemo, useRef, useState } from 'react';
 import './App.css';
 import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
-import OptimizeTest from './OptimizeTest';
 
 
 function App() {
@@ -22,14 +21,14 @@ function App() {
         id: dataId.current++
       }
     })
-    setDate(initData)
+    setDate(initData);
   }
   useEffect(() => {
     getDate();
   },[])
 
   // 추가 기능
-  const onCreate = (author, content, emotion) => {
+  const onCreate = useCallback((author, content, emotion) => {
     const created_date = new Date().getTime();
     const newItem = {
       author,
@@ -39,8 +38,10 @@ function App() {
       id : dataId.current
     }
     dataId.current += 1;
-    setDate([newItem, ...data])
-  };
+    setDate((data)=>[newItem, ...data]); // 함수형 업데이트
+  },
+  []); // deps 안에 값이 변경되면 함수가 재생성됨
+
   // 삭제 기능
   const onRemove = (targetId) => {
     console.log(`${targetId}가 삭제 되었습니다`);
@@ -55,6 +56,9 @@ function App() {
     );
   }
 
+
+//useMemo는 값을 반환 하기 때문에 useCallback 을 onCreate에 적용 
+//useCallback은 메모이제이션된 콜백을 반환
   const getDiaryAnalysis = useMemo(() => {
     console.log("일기 분석 시작");
 
@@ -69,7 +73,6 @@ function App() {
 
   return (
     <div className="App">
-      <OptimizeTest />
       <DiaryEditor onCreate={onCreate}/>
       <div>전체일기 : {data.length}</div>
       <div>기분 좋은 일기 수 : {goodCount}</div>
