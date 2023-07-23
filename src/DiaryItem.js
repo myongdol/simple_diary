@@ -1,7 +1,19 @@
-import { useRef, useState } from "react";
+import React, { useEffect, useRef, useState } from "react";
 
 
-const DiaryItem = ({author, content, created_date, emotion, id, onRemove, onEdit}) => {
+const DiaryItem = ({
+    author,
+    content,
+    created_date,
+    emotion,
+    id,
+    onRemove,
+    onEdit
+}) => {
+    useEffect(() => {
+        console.log(`${id}번째 아이템 렌더링`);
+    })
+ 
     // 삭제기능
     const handleRemove = () => {
         if(window.confirm(`${id}번째의 일기를 정말 삭제 하시겠습니까?`)) {
@@ -76,4 +88,4 @@ const DiaryItem = ({author, content, created_date, emotion, id, onRemove, onEdit
     );
 };
 
-export default DiaryItem;
+export default React.memo(DiaryItem);

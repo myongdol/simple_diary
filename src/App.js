@@ -43,18 +43,16 @@ function App() {
   []); // deps 안에 값이 변경되면 함수가 재생성됨
 
   // 삭제 기능
-  const onRemove = (targetId) => {
-    console.log(`${targetId}가 삭제 되었습니다`);
-    const newDiaryList = data.filter((it) => it.id !== targetId)
-    console.log(newDiaryList)
-    setDate(newDiaryList);
-  }
+  const onRemove = useCallback((targetId) => {
+    setDate(data => data.filter((it) => it.id !== targetId));
+  }, []);
   // 수정 기능
-  const onEdit = (targetId, newContent) => {
-    setDate(
-      data.map((it) => it.id === targetId ? {...it, content: newContent}: it)
+  const onEdit = useCallback((targetId, newContent) => {
+    setDate((data) =>
+      data.map((it) =>
+        it.id === targetId ? {...it, content: newContent}: it)
     );
-  }
+  },[]);
 
 
 //useMemo는 값을 반환 하기 때문에 useCallback 을 onCreate에 적용 
