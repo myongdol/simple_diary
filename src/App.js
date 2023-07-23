@@ -4,8 +4,6 @@ import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
 
 
-//https://jsonplaceholder.typicode.com/comments
-
 function App() {
   const [data, setDate] = useState([]);
 
@@ -56,9 +54,25 @@ function App() {
     );
   }
 
+  const getDiaryAnalysis = () => {
+    console.log("일기 분석 시작");
+
+    const goodCount = data.filter((item) => item.emotion >= 3).length;
+    const badCount = data.length - goodCount;
+    const goodRatio = (goodCount / data.length) * 100;
+    
+    return {goodCount, badCount, goodRatio};
+  }
+  const {goodCount, badCount, goodRatio} = getDiaryAnalysis();
+
+
   return (
     <div className="App">
       <DiaryEditor onCreate={onCreate}/>
+      <div>전체일기 : {data.length}</div>
+      <div>기분 좋은 일기 수 : {goodCount}</div>
+      <div>기분 나쁜 일기 수 : {badCount}</div>
+      <div>기분 나쁜 좋은 비율 : {goodRatio}</div>
       <DiaryList onRemove={onRemove} diaryList={data} onEdit={onEdit}/>
     </div>
   );
