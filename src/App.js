@@ -1,4 +1,4 @@
-import { useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
+import React,{ useCallback, useEffect, useMemo, useReducer, useRef } from 'react';
 import './App.css';
 import DiaryEditor from './DiaryEditor';
 import DiaryList from './DiaryList';
@@ -6,9 +6,9 @@ import DiaryList from './DiaryList';
 //reducer는 2개의 파라미터를 받음
 //state는 상태변화가 일어나기 직전, action은 어떤 상태변화를 일으켜야 하는지에 대한 정보
 const reducer = (state, action) => {
-  switch(action.type) {
+  switch (action.type) {
     case "INIT": {
-      return action.date
+      return action.data;
     }
     case "CREATE": {
       const created_date = new Date().getTime();
@@ -31,12 +31,14 @@ const reducer = (state, action) => {
   }
 };
 
+export const DiaryStateContext = React.createContext();
+
 function App() {
 
   const [data, dispatch,] = useReducer(reducer, []);
   const dataId = useRef(0);
 
-  const getDate = async() => {
+  const getData = async() => {
     const res = await fetch('https://jsonplaceholder.typicode.com/comments').then((res) => res.json());
     
     const initData = res.slice(0, 20).map((item) => {
@@ -51,7 +53,7 @@ function App() {
     dispatch({type:"INIT", data:initData})
   }
   useEffect(() => {
-    getDate();
+    getData();
   },[])
 
   // 추가 기능
@@ -73,10 +75,7 @@ function App() {
   // 수정 기능
   const onEdit = useCallback((targetId, newContent) => {
     dispatch({
-      type: "EDIT",
-      targetId,
-      newContent
-    })
+      type: "EDIT", targetId, newContent });
   },[]);
 
 
@@ -93,6 +92,7 @@ function App() {
 
 
   return (
+    <DiaryStateContext.Provider value={data}>
     <div className="App">
       <DiaryEditor onCreate={onCreate}/>
       <div>전체일기 : {data.length}</div>
@@ -101,6 +101,7 @@ function App() {
       <div>기분 나쁜 좋은 비율 : {goodRatio}</div>
       <DiaryList onRemove={onRemove} diaryList={data} onEdit={onEdit}/>
     </div>
+    </DiaryStateContext.Provider>
   );
 }
 
