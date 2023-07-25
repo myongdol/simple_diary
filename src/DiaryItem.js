@@ -1,4 +1,5 @@
-import React, { useEffect, useRef, useState } from "react";
+import React, { useContext, useRef, useState } from "react";
+import { DiaryDispatchContext } from "./App";
 
 
 const DiaryItem = ({
@@ -7,12 +8,8 @@ const DiaryItem = ({
     created_date,
     emotion,
     id,
-    onRemove,
-    onEdit
 }) => {
-    useEffect(() => {
-        console.log(`${id}번째 아이템 렌더링`);
-    })
+    const {onRemove, onEdit} = useContext(DiaryDispatchContext)
  
     // 삭제기능
     const handleRemove = () => {

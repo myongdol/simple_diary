@@ -1,8 +1,11 @@
+import { useContext } from "react";
 import DiaryItem from "./DiaryItem";
+import { DiaryStateContext } from "./App";
 
 // 현재 onDelete 프롭스 드릴링 발생한 상황
-const DiaryList = ({diaryList, onRemove, onEdit}) => {
+const DiaryList = () => {
    
+    const diaryList = useContext(DiaryStateContext);
     
     return (
         <div className="DiaryList">
@@ -10,7 +13,7 @@ const DiaryList = ({diaryList, onRemove, onEdit}) => {
             <h4>{diaryList.length}개의 일기가 있습니다.</h4>
             <div>
                 {diaryList.map((it) => (
-                   <DiaryItem key={it.id} {...it} onRemove={onRemove} onEdit={onEdit}/>
+                   <DiaryItem key={it.id} {...it}/>
                 ))}
             </div>
         </div>
