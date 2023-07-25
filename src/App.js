@@ -7,10 +7,10 @@ import DiaryList from './DiaryList';
 //state는 상태변화가 일어나기 직전, action은 어떤 상태변화를 일으켜야 하는지에 대한 정보
 const reducer = (state, action) => {
   switch(action.type) {
-    case 'INIT': {
+    case "INIT": {
       return action.date
     }
-    case 'CREATE': {
+    case "CREATE": {
       const created_date = new Date().getTime();
       const newItem = {
         ...action.data,
@@ -18,10 +18,10 @@ const reducer = (state, action) => {
       }
       return [newItem, ...state]
     }
-    case 'REMOVE': {
+    case "REMOVE": {
       return state.filter((item) => item.id !== action.targetId)
     }
-    case 'EDIT': {
+    case "EDIT": {
       return state.map((item) =>
       item.id === action.targetId ?
       {...item, content: action.newContent} : item);
@@ -48,7 +48,7 @@ function App() {
         id: dataId.current++
       }
     });
-    dispatch({type:'INIT', data:initData})
+    dispatch({type:"INIT", data:initData})
   }
   useEffect(() => {
     getDate();
@@ -57,7 +57,7 @@ function App() {
   // 추가 기능
   const onCreate = useCallback((author, content, emotion) => {
     dispatch({
-      type:'CREATE',
+      type:"CREATE",
       data:{author, content, emotion, id:dataId.current}});
     dataId.current += 1;
   },
@@ -66,7 +66,7 @@ function App() {
   // 삭제 기능
   const onRemove = useCallback((targetId) => {
     dispatch({
-      type: 'REMOVE',
+      type: "REMOVE",
       targetId
     })
   }, []);
@@ -83,8 +83,6 @@ function App() {
 //useMemo는 값을 반환 하기 때문에 useCallback 을 onCreate에 적용 
 //useCallback은 메모이제이션된 콜백을 반환
   const getDiaryAnalysis = useMemo(() => {
-    console.log("일기 분석 시작");
-
     const goodCount = data.filter((item) => item.emotion >= 3).length;
     const badCount = data.length - goodCount;
     const goodRatio = (goodCount / data.length) * 100;
